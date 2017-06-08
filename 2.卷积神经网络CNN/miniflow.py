@@ -1,7 +1,11 @@
+# coding=utf-8
+
 class Node(object):
     def __init__(self, inbound_nodes=[]):
+        # 1.存储对传入节点的引用
         # Nodes from which this Node receives values
         self.inbound_nodes = inbound_nodes
+        # 存储对传出节点的引用
         # Nodes to which this Node passes values
         self.outbound_nodes = []
         # A calculated value
@@ -13,8 +17,10 @@ class Node(object):
     # These will be implemented in a subclass.
     def forward(self):
         """
+        正向传播
         Forward propagation.
 
+        基于inbound_nodes计算输出值并存于self.value
         Compute the output value based on `inbound_nodes` and
         store the result in self.value.
         """
@@ -23,6 +29,7 @@ class Node(object):
 
 class Input(Node):
     def __init__(self):
+        # 输入节点没有inbound_nodes,在构造器中不必传入任何参数
         # an Input node has no inbound nodes,
         # so no need to pass anything to the Node instantiator
         Node.__init__(self)
@@ -42,10 +49,10 @@ class Input(Node):
 
 
 class Add(Node):
-    def __init__(self, x, y):
+    def __init__(self, *inputs):
         # You could access `x` and `y` in forward with
         # self.inbound_nodes[0] (`x`) and self.inbound_nodes[1] (`y`)
-        Node.__init__(self, [x, y])
+        Node.__init__(self, inputs)
 
     def forward(self):
         """
@@ -53,9 +60,9 @@ class Add(Node):
 
         Your code here!
         """
-        x_value = self.inbound_nodes[0].value
-        y_value = self.inbound_nodes[1].value
-        self.value = x_value + y_value
+        self.value = 0
+        for n in self.inbound_nodes:
+            self.value += n.value
 
 
 """
