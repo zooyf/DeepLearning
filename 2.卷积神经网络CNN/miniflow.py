@@ -1,7 +1,3 @@
-"""
-You need to change the Add() class below.
-"""
-
 class Node(object):
     def __init__(self, inbound_nodes=[]):
         # Nodes from which this Node receives values
@@ -57,7 +53,9 @@ class Add(Node):
 
         Your code here!
         """
-        self.value = self.inbound_nodes[0].value + self.inbound_nodes[1].value
+        x_value = self.inbound_nodes[0].value
+        y_value = self.inbound_nodes[1].value
+        self.value = x_value + y_value
 
 
 """
@@ -77,6 +75,8 @@ def topological_sort(feed_dict):
     # get all nodes
     input_nodes = [n for n in feed_dict.keys()]
 
+    # G为每一个节点做关联并存储它们
+    # G stores each node, make connection to each of them.
     G = {}
     nodes = [n for n in input_nodes]
     while len(nodes) > 0:
@@ -90,6 +90,8 @@ def topological_sort(feed_dict):
             G[m]['in'].add(n)
             nodes.append(m)
 
+    # Kahn's algorithm
+    # https://en.wikipedia.org/wiki/Topological_sorting#Kahn.27s_algorithm
     # L ← Empty list that will contain the sorted elements
     L = []
     # S ← Set of all nodes with no incoming edges
