@@ -80,7 +80,7 @@ class Linear(Node):
         """
         Set self.value to the value of the linear function output.
 
-        Your code goes here!
+        进行线性计算
         """
         inputs = self.inbound_nodes[0].value
         weights = self.inbound_nodes[1].value
